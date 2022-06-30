@@ -14,6 +14,10 @@ const user = mongoose.Schema({
         type: String,
         required: [true, 'Fill all the fields']
     },
+    speciality: {
+        type: String,
+        required: [true, 'Fill all the fields']
+    },
     facebook: {
         type: String,
         default: "",
