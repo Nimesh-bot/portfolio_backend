@@ -1,10 +1,9 @@
-const { Router } = require('express');
 const express = require('express');
 const multer = require('multer');
 
 const route = express.Router();
 
-const { addProject, addSkills, addOrganization, addDesign } = require('../controller/publicController');
+const { addProject, addSkills, addOrganization, addDesign } = require('../controller/adminController');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {

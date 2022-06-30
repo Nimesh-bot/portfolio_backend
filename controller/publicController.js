@@ -59,4 +59,4 @@ const getOrganizations = (req, res) => {
     })
 }
 
-export default { getSkills, getProjects, getDesigns, getOrganizations };
+module.exports = { getSkills, getProjects, getDesigns, getOrganizations };

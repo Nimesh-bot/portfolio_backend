@@ -67,4 +67,4 @@ const addDesign = (req, res) => {
     }
 }
 
-export default { addSkills, addProject, addOrganization, addDesign };
+module.exports = { addSkills, addProject, addOrganization, addDesign };
