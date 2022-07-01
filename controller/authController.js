@@ -44,11 +44,11 @@ const loginUser = async (req, res) => {
             throw Error ("Password is incorrect")
         }
 
-        const access_token = await access_token(user._id)
+        const accessToken = await access_token(user._id)
 
         res.status(200).json({
             message: "User logged in successfully",
-            access_token
+            accessToken
         })
     }
     catch(err) {
