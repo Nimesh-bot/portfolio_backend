@@ -1,19 +1,22 @@
+const bcrypt = require('bcrypt');
+const { access_token, refresh_token, standard_token } = require('../services/generateToken');
+const { verifyRefresh, verifyOther } = require('../services/verifyToken');
 const userModel = require('../model/userModel');
 
 const registerUser = async (req, res) => {
-    var newUser = req.body;
-
+    const newUser = req.body;
+    console.log(newUser);
     try {
         if(newUser.password.length < 6 ) {
             throw Error ("Password must be at least 6 characters long")
         }
-        const salt = await bcrpt.genSalt(10);
+        const salt = await bcrypt.genSalt(10);
         const hashed = await bcrypt.hash(newUser.password, salt);
 
         newUser.password = hashed;
 
         const newUserInfo = new userModel(newUser);
-        newUserInfo.save()
+        await newUserInfo.save()
 
         res.status(200).json({
             message: "User registered successfully"
@@ -40,10 +43,12 @@ const loginUser = async (req, res) => {
         if(!isMatch) {
             throw Error ("Password is incorrect")
         }
-        // const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '1h'});
+
+        const access_token = await access_token(user._id)
+
         res.status(200).json({
             message: "User logged in successfully",
-            // token
+            access_token
         })
     }
     catch(err) {
