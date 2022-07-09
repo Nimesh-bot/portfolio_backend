@@ -3,11 +3,13 @@ const skillsModel = require("../model/skillsModel")
 const designModel = require("../model/designModel")
 const organizationsModel = require("../model/organizationsModel")
 
-const addSkills = (req, res) => {
-    const {skills} = req.body;
+const addSkills = async(req, res) => {
+    const skills = req.body;
+    skills['icon'] = req.file.path;
+    
     try {
         const newSkills = new skillsModel(skills);
-        newSkills.save()
+        await newSkills.save()
         res.status(200).json({
             message: "Skills added successfully"
         })
@@ -19,11 +21,11 @@ const addSkills = (req, res) => {
     }
 }
 
-const addProject = (req, res) => {
+const addProject = async(req, res) => {
     const {project} = req.body;
     try {
         const newProject = new frontendModel(project);
-        newProject.save()
+        await newProject.save()
         res.status(200).json({
             message: "Project added successfully"
         })
@@ -35,11 +37,11 @@ const addProject = (req, res) => {
     }
 }
 
-const addOrganization = (req, res) => {
+const addOrganization = async(req, res) => {
     const {organization} = req.body;
     try {
         const newOrganization = new organizationsModel(organization);
-        newOrganization.save()
+        await newOrganization.save()
         res.status(200).json({
             message: "Organization added successfully"
         })
@@ -51,11 +53,11 @@ const addOrganization = (req, res) => {
     }
 }
 
-const addDesign = (req, res) => {
+const addDesign = async(req, res) => {
     const {design} = req.body;
     try {
         const newDesign = new designModel(design);
-        newDesign.save()
+        await newDesign.save()
         res.status(200).json({
             message: "Design added successfully"
         })
