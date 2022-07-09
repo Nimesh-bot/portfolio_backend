@@ -112,6 +112,36 @@ const getProject = async(req, res) => {
         })
     }
 }
+const getAllDesign = async(req, res) => {
+    try{
+        const designs = await designModel.find();
+        res.status(200).json({
+            message: 'Designs fetched successfully',
+            designs
+        })
+    }
+    catch(err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+const getDesign = async(req, res) => {
+    const {id} = req.params;
+    try{
+        const design = await designModel.findById(id);
+        res.status(200).json({
+            message: 'Requested design fetched successfully',
+            design
+        })
+    }
+    catch(err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
 
 const getAllOrganizations = async(req, res) => {
     try {
