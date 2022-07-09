@@ -112,7 +112,7 @@ const getProject = async(req, res) => {
         })
     }
 }
-const getAllDesign = async(req, res) => {
+const getAllDesigns = async(req, res) => {
     try{
         const designs = await designModel.find();
         res.status(200).json({
@@ -182,6 +182,8 @@ module.exports = {
     getAllSkills, 
     getAllProjects, 
     getProject, 
+    getAllDesigns,
+    getDesign,
     getAllOrganizations, 
-    getOrganization 
+    getOrganization,
 };

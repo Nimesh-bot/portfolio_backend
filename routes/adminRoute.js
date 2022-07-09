@@ -3,7 +3,7 @@ const multer = require('multer');
 
 const route = express.Router();
 
-const { addProject, addSkills, addOrganization, addDesign, getAllSkills, getAllOrganizations, getOrganization, getAllProjects, getProject } = require('../controller/adminController');
+const { addProject, addSkills, addOrganization, addDesign, getAllSkills, getAllOrganizations, getOrganization, getAllProjects, getProject, getAllDesigns, getDesign } = require('../controller/adminController');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -28,5 +28,7 @@ route.get('/organizations', getAllOrganizations);
 route.get('/organization/:id', getOrganization);
 route.get('/projects', getAllProjects);
 route.get('/project/:id', getProject);
+route.get('/designs', getAllDesigns);
+route.get('/design/:id', getDesign);
 
 module.exports = route
