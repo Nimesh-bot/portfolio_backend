@@ -67,4 +67,91 @@ const addDesign = (req, res) => {
     }
 }
 
-module.exports = { addSkills, addProject, addOrganization, addDesign };
+const getAllSkills = async(req, res) => {
+    try {
+        const skills = await skillsModel.find();
+        res.status(200).json({
+            message: "Skills fetched successfully",
+            skills
+        })
+    }
+    catch(err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+const getAllProjects = async(req, res) => {
+    try {
+        const projects = await frontendModel.find();
+        res.status(200).json({
+            message: "Projects fetched successfully",
+            projects
+        })
+    }
+    catch(err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+const getProject = async(req, res) => {
+    const {id} = req.params;
+    try {
+        const project = await frontendModel.findById(id);
+        res.status(200).json({
+            message: "Project fetched successfully",
+            project
+        })
+    }
+    catch(err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+const getAllOrganizations = async(req, res) => {
+    try {
+        const organizations = await organizationsModel.find();
+        res.status(200).json({
+            message: "Organizations fetched successfully",
+            organizations
+        })
+    }
+    catch(err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+const getOrganization = async(req, res) => {
+    const {id} = req.params;
+    try {
+        const organization = await organizationsModel.findById(id);
+        res.status(200).json({
+            message: "Organization fetched successfully",
+            organization
+        })
+    }
+    catch(err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+
+module.exports = { 
+    addSkills, 
+    addProject, 
+    addOrganization, 
+    addDesign, 
+    getAllSkills, 
+    getAllProjects, 
+    getProject, 
+    getAllOrganizations, 
+    getOrganization 
+};
