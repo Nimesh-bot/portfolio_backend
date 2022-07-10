@@ -10,7 +10,7 @@ const skills = mongoose.Schema({
         required: [true, 'Fill all the fields']
     },
     percentage: {
-        type: Number,
+        type: String,
         required: [true, 'Fill all the fields']
     },
 })
