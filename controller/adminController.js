@@ -1,13 +1,34 @@
 const frontendModel = require("../model/frontendModel")
 const skillsModel = require("../model/skillsModel")
 const designModel = require("../model/designModel")
+const gallartModel = require("../model/galleryModel")
 const organizationsModel = require("../model/organizationsModel")
+const cloudinary = require('cloudinary')
+const { unlink } = require('fs');
+
+cloudinary.config({
+    cloud_name: process.env.ClLOUDNAME,
+    api_key: process.env.APIKEYC,
+    api_secret: process.env.APISECRETC
+});
 
 const addSkills = async(req, res) => {
     const skills = req.body;
-    skills['icon'] = req.file.path;
     
     try {
+        if(req.file) {
+            const tempPath = req.file.path;
+            await cloudinary.v2.uploader.upload(
+                tempPath,
+                async function(error, result){
+                    skills["icon"] = result.url;
+                    skills["iconId"] = result.public_id;
+                    unlink(tempPath, (err) => {
+                        if (err) throw err;
+                    });
+                }
+            )
+        }
         const newSkills = new skillsModel(skills);
         await newSkills.save()
         res.status(200).json({
@@ -22,8 +43,29 @@ const addSkills = async(req, res) => {
 }
 
 const addProject = async(req, res) => {
-    const {project} = req.body;
+    const project = req.body;
+    console.log(project)
+    console.log(req.file)
+    const gal = {}
+
     try {
+        if(req.file) {
+                const tempPath = req.file.path;
+                await cloudinary.v2.uploader.upload(
+                    tempPath,
+                    async function(error, result){
+                        gal["image"] = result.url;
+                        gal["img"] = result.public_id;
+                        unlink(tempPath, (err) => {
+                            if (err) throw err;
+                        });
+                    }
+                )         
+        }
+        const new_gal = new gallartModel(gal);
+        const gall = await new_gal.save()
+        project["gallery"] = [{gal: gall._id}]
+
         const newProject = new frontendModel(project);
         await newProject.save()
         res.status(200).json({
@@ -40,6 +82,19 @@ const addProject = async(req, res) => {
 const addOrganization = async(req, res) => {
     const {organization} = req.body;
     try {
+        if(req.file) {
+            const tempPath = req.file.path;
+            await cloudinary.v2.uploader.upload(
+                tempPath,
+                async function(error, result){
+                    organization["logo"] = result.url;
+                    organization["logoId"] = result.public_id;
+                    unlink(tempPath, (err) => {
+                        if (err) throw err;
+                    });
+                }
+            )
+        }
         const newOrganization = new organizationsModel(organization);
         await newOrganization.save()
         res.status(200).json({
@@ -56,6 +111,9 @@ const addOrganization = async(req, res) => {
 const addDesign = async(req, res) => {
     const {design} = req.body;
     try {
+        if(req.file) {
+
+        }
         const newDesign = new designModel(design);
         await newDesign.save()
         res.status(200).json({

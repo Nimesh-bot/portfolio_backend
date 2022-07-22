@@ -19,7 +19,7 @@ const upload = multer({ storage: storage });
 // post
 route.post('/skills', upload.single('icon'), addSkills);
 route.post('/organizations', upload.single('image'), addOrganization);
-route.post('/projects', upload.array('image'), addProject);
+route.post('/projects', upload.single('image'), addProject);
 route.post('/designs', upload.array('image'), addDesign);
 
 module.exports = route

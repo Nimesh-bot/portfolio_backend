@@ -9,6 +9,9 @@ const skills = mongoose.Schema({
         type: String,
         required: [true, 'Fill all the fields']
     },
+    iconId: {
+        type: String,
+    },
     percentage: {
         type: String,
         required: [true, 'Fill all the fields']

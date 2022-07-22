@@ -1,18 +1,28 @@
 const mongoose = require('mongoose')
+const {Schema} = mongoose
 
 const frontend = mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'Fill all the fields']
+        required: [true, 'Title of the project is must']
     },
     description: {
         type: String,
-        required: [true, 'Fill all the fields'],
+        required: [true, 'Please explain about the project'],
         maxLength: [300, 'Description is too long']
     },
+    gallery: [
+        {
+            gal: {
+                type: Schema.Types.ObjectId,
+                ref: 'gallery'
+            }
+        }
+    ],
+
     techStack: {
         type: Array,
-        required: [true, 'Fill all the fields'],
+        required: [true, 'Please display some tech stack of the project'],
     },
     team: {
         type: Array,
