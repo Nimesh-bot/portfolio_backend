@@ -1,7 +1,7 @@
 const frontendModel = require("../model/frontendModel")
 const skillsModel = require("../model/skillsModel")
 const designModel = require("../model/designModel")
-const gallartModel = require("../model/galleryModel")
+const gallaryModel = require("../model/galleryModel")
 const organizationsModel = require("../model/organizationsModel")
 const cloudinary = require('cloudinary')
 const { unlink } = require('fs');
@@ -49,25 +49,25 @@ const addProject = async(req, res) => {
 
     try {
         if(req.files) {
-            console.log("Waha")
+            console.log(req.files)
             for(var i=0; i<req.files.length; i++){
                 const tempPath = req.files[i].path;
+                console.log(tempPath)
                 await cloudinary.v2.uploader.upload(
                     tempPath,
+                    
                     function(error, result){
-                        gal['image']( result.url);
-                        gal['img'](result.public_id);
+                        gal['image'] = result.url;
+                        gal['img'] = result.public_id;
                         unlink(tempPath, (err) => {
                             if (err) throw err;
                         });
                     }
                 )
-                console.log("gal")
-                const new_gal = new gallartModel(gal);
+                const new_gal = new gallaryModel(gal);
                 const gall = await new_gal.save()
                 console.log(gall)
                 arr.push(gall._id)
-                console.log("Wahahahaha")
             }
         }
         console.log(arr)
@@ -87,41 +87,35 @@ const addProject = async(req, res) => {
     }
 }
 
-const addOrganization = async(req, res) => {
-    const {organization} = req.body;
-    try {
-        if(req.file) {
-            const tempPath = req.file.path;
-            await cloudinary.v2.uploader.upload(
-                tempPath,
-                async function(error, result){
-                    organization["logo"] = result.url;
-                    organization["logoId"] = result.public_id;
-                    unlink(tempPath, (err) => {
-                        if (err) throw err;
-                    });
-                }
-            )
-        }
-        const newOrganization = new organizationsModel(organization);
-        await newOrganization.save()
-        res.status(200).json({
-            message: "Organization added successfully"
-        })
-    }
-    catch(err) {
-        res.status(400).json({
-            message: err.message
-        })
-    }
-}
-
 const addDesign = async(req, res) => {
-    const {design} = req.body;
+    const design = req.body;
+    const arr = []
+    const gal = {}
+    
     try {
-        if(req.file) {
-
+        if(req.files) {
+            for(var i=0; i<req.files.length; i++){
+                const tempPath = req.files[i].path;
+                console.log(tempPath)
+                await cloudinary.v2.uploader.upload(
+                    tempPath,
+                    
+                    function(error, result){
+                        gal['image'] = result.url;
+                        gal['img'] = result.public_id;
+                        unlink(tempPath, (err) => {
+                            if (err) throw err;
+                        });
+                    }
+                )
+                const new_gal = new gallaryModel(gal);
+                const gall = await new_gal.save()
+                console.log(gall)
+                arr.push(gall._id)
+            }
         }
+        design['gallery'] = arr
+
         const newDesign = new designModel(design);
         await newDesign.save()
         res.status(200).json({
@@ -138,6 +132,6 @@ const addDesign = async(req, res) => {
 module.exports = { 
     addSkills, 
     addProject, 
-    addOrganization, 
+    // addOrganization, 
     addDesign,
 };

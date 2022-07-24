@@ -11,10 +11,13 @@ const frontend = mongoose.Schema({
         required: [true, 'Please explain about the project'],
         maxLength: [300, 'Description is too long']
     },
+    features: {
+        type: Array,
+        required: [true, 'Please add features of the project']
+    },
     gallery: {
         type: Array,
     },
-
     techStack: {
         type: Array,
         required: [true, 'Please display some tech stack of the project'],
