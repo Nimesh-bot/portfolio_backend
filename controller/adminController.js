@@ -44,13 +44,14 @@ const addSkills = async(req, res) => {
 
 const addProject = async(req, res) => {
     const project = req.body;
-    console.log(project)
-    console.log(req.file)
+    const arr = []
     const gal = {}
 
     try {
-        if(req.file) {
-                const tempPath = req.file.path;
+        if(req.files) {
+            console.log("Waha")
+            for(var i=0; i<req.files.length; i++){
+                const tempPath = req.files[i].path;
                 await cloudinary.v2.uploader.upload(
                     tempPath,
                     async function(error, result){
@@ -60,11 +61,17 @@ const addProject = async(req, res) => {
                             if (err) throw err;
                         });
                     }
-                )         
+                )
+                console.log("gal")
+                const new_gal = new gallartModel(gal);
+                const gall = await new_gal.save()
+                console.log(gall)
+                arr.push(gall._id)
+                console.log("Wahahahaha")
+            }
         }
-        const new_gal = new gallartModel(gal);
-        const gall = await new_gal.save()
-        project["gallery"] = [{gal: gall._id}]
+        console.log(arr)
+        project['gallery'] = arr
 
         const newProject = new frontendModel(project);
         await newProject.save()
@@ -73,6 +80,7 @@ const addProject = async(req, res) => {
         })
     }
     catch(err) {
+        console.log(err)
         res.status(400).json({
             message: err.message
         })
