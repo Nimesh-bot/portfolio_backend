@@ -15,9 +15,12 @@ const frontend = mongoose.Schema({
         type: Array,
         required: [true, 'Please add features of the project']
     },
-    gallery: {
-        type: Array,
-    },
+    gallery: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'gallery'
+        }
+    ],
     techStack: {
         type: Array,
         required: [true, 'Please display some tech stack of the project'],

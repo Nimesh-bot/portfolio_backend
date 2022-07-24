@@ -10,9 +10,12 @@ const design = mongoose.Schema({
         required: [true, 'Fill all the fields'],
         maxLength: [300, 'Description is too long']
     },
-    gallery: {
-        type: Array,
-    },
+    gallery: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'gallery'
+        }
+    ],
     tools: {
         type: Array,
         required: [true, 'Fill all the fields'],

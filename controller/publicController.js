@@ -20,7 +20,7 @@ const getAllSkills = async(req, res) => {
 
 const getAllProjects = async(req, res) => {
     try {
-        const projects = await frontendModel.find();
+        const projects = await frontendModel.find().populate('gallery');
         res.status(200).json({
             message: "Projects fetched successfully",
             projects
