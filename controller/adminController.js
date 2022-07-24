@@ -44,28 +44,34 @@ const addSkills = async(req, res) => {
 
 const addProject = async(req, res) => {
     const project = req.body;
-    
-    var image = []
-    var img = []
+    const arr = []
+    const gal = {}
 
     try {
         if(req.files) {
-            await req.files.forEach(async(item)=>{
-                const tempPath = item.path;
+            console.log("Waha")
+            for(var i=0; i<req.files.length; i++){
+                const tempPath = req.files[i].path;
                 await cloudinary.v2.uploader.upload(
                     tempPath,
                     function(error, result){
-                        image.push( result.url);
-                        img.push(result.public_id);
+                        gal['image']( result.url);
+                        gal['img'](result.public_id);
                         unlink(tempPath, (err) => {
                             if (err) throw err;
                         });
                     }
                 )
-                console.log(image)
-            })        
+                console.log("gal")
+                const new_gal = new gallartModel(gal);
+                const gall = await new_gal.save()
+                console.log(gall)
+                arr.push(gall._id)
+                console.log("Wahahahaha")
+            }
         }
-        project["gallery"] = image;
+        console.log(arr)
+        project['gallery'] = arr
 
         const newProject = new frontendModel(project);
         await newProject.save()
@@ -74,6 +80,7 @@ const addProject = async(req, res) => {
         })
     }
     catch(err) {
+        console.log(err)
         res.status(400).json({
             message: err.message
         })

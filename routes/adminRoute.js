@@ -7,7 +7,7 @@ const { addProject, addSkills, addOrganization, addDesign } = require('../contro
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, './Image/');
+        cb(null, './Image');
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
