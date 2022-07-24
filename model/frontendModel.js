@@ -11,14 +11,9 @@ const frontend = mongoose.Schema({
         required: [true, 'Please explain about the project'],
         maxLength: [300, 'Description is too long']
     },
-    gallery: [
-        {
-            gal: {
-                type: Schema.Types.ObjectId,
-                ref: 'gallery'
-            }
-        }
-    ],
+    gallery: {
+        type: Array,
+    },
 
     techStack: {
         type: Array,
