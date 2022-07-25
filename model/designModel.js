@@ -8,7 +8,7 @@ const design = mongoose.Schema({
     description: {
         type: String,
         required: [true, 'Fill all the fields'],
-        maxLength: [300, 'Description is too long']
+        maxLength: [500, 'Description is too long']
     },
     gallery: [
         {

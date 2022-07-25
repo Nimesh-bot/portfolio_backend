@@ -9,7 +9,7 @@ const frontend = mongoose.Schema({
     description: {
         type: String,
         required: [true, 'Please explain about the project'],
-        maxLength: [300, 'Description is too long']
+        maxLength: [500, 'Description is too long']
     },
     features: {
         type: Array,
