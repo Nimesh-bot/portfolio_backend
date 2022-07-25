@@ -36,7 +36,7 @@ const getAllProjects = async(req, res) => {
 const getProject = async(req, res) => {
     const {id} = req.params;
     try {
-        const project = await frontendModel.findById(id);
+        const project = await frontendModel.findById(id).populate('gallery');
         res.status(200).json({
             message: "Project fetched successfully",
             project
@@ -50,7 +50,7 @@ const getProject = async(req, res) => {
 }
 const getAllDesigns = async(req, res) => {
     try{
-        const designs = await designModel.find();
+        const designs = await designModel.find().populate('gallery');
         res.status(200).json({
             message: 'Designs fetched successfully',
             designs
@@ -66,7 +66,7 @@ const getAllDesigns = async(req, res) => {
 const getDesign = async(req, res) => {
     const {id} = req.params;
     try{
-        const design = await designModel.findById(id);
+        const design = await designModel.findById(id).populate('gallery');
         res.status(200).json({
             message: 'Requested design fetched successfully',
             design
