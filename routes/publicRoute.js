@@ -6,7 +6,7 @@ const { getAllSkills, getAllOrganizations, getOrganization, getAllProjects, getP
 
 route.get('/', (req, res) => {
     res.status(200).json({
-        "Greetings visitors": "Welcome to my Portfolio Website."
+        "message": "Welcome to my Portfolio Website."
     })
 })
 
