@@ -2,6 +2,8 @@ const frontendModel = require("../model/frontendModel")
 const skillsModel = require("../model/skillsModel")
 const designModel = require("../model/designModel")
 const organizationsModel = require("../model/organizationsModel")
+const hireModel = require("../model/hireModel")
+const sendm = require("../services/receiveMail")
 
 const getAllSkills = async(req, res) => {
     try {
@@ -109,4 +111,26 @@ const getOrganization = async(req, res) => {
         })
     }
 }
-module.exports = { getAllDesigns, getDesign, getAllOrganizations, getOrganization, getAllSkills, getAllProjects, getProject };
+
+const receiveRequest = async(req, res) => {
+    const {email, subject, text} = req.body;
+    try {
+        const request = new hireModel({
+            email,
+            subject,
+            text
+        })
+        await request.save();
+        
+        await sendm.request(email, subject, text);
+        res.status(200).json({
+            message: "Request sent successfully"
+        })
+    }
+    catch(err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+}
+module.exports = { getAllDesigns, getDesign, getAllOrganizations, getOrganization, getAllSkills, getAllProjects, getProject, receiveRequest };

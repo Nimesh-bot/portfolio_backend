@@ -2,7 +2,7 @@ const express = require('express');
 
 const route = express.Router();
 
-const { getAllSkills, getAllOrganizations, getOrganization, getAllProjects, getProject, getAllDesigns, getDesign } = require('../controller/publicController');
+const { getAllSkills, getAllOrganizations, getOrganization, getAllProjects, getProject, getAllDesigns, getDesign, receiveRequest } = require('../controller/publicController');
 
 route.get('/', (req, res) => {
     res.status(200).json({
@@ -17,5 +17,7 @@ route.get('/projects', getAllProjects);
 route.get('/project/:id', getProject);
 route.get('/designs', getAllDesigns);
 route.get('/design/:id', getDesign);
+
+route.post('/hireme', receiveRequest);
 
 module.exports = route;
