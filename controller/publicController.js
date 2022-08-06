@@ -3,6 +3,7 @@ const skillsModel = require("../model/skillsModel")
 const designModel = require("../model/designModel")
 const organizationsModel = require("../model/organizationsModel")
 const hireModel = require("../model/hireModel")
+const nodemailer = require('nodemailer')
 
 const getAllSkills = async(req, res) => {
     try {
