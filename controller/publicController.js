@@ -3,7 +3,6 @@ const skillsModel = require("../model/skillsModel")
 const designModel = require("../model/designModel")
 const organizationsModel = require("../model/organizationsModel")
 const hireModel = require("../model/hireModel")
-const sendm = require("../services/receiveMail")
 
 const getAllSkills = async(req, res) => {
     try {
@@ -113,16 +112,41 @@ const getOrganization = async(req, res) => {
 }
 
 const receiveRequest = async(req, res) => {
-    const {email, subject, text} = req.body;
     try {
-        const request = new hireModel({
+        const {email,subject,text} = req.body;
+        
+        const mailrequest = new hireModel({
             email,
             subject,
             text
         })
-        await request.save();
         
-        await sendm.request(email, subject, text);
+        await mailrequest.save();
+
+        const transporter = nodemailer.createTransport({
+            service:'gmail',
+            auth:{
+                user:'somit409@gmail.com',
+                pass:'spprtvextnqhittp'
+            }
+        })
+        
+        const mailOptions = {
+            from :'somit409@gmail.com',
+            to : 'nimesh.ffxiv@gmail.com',
+            subject : subject,
+            text : 'From: ' + email + '\n' + text
+        }
+        
+        transporter.sendMail(mailOptions, (err, info) => {
+            if(err) {
+                console.log(err)
+            }
+            else {
+                console.log("Email sent: " + info.response)
+            }
+        } )
+
         res.status(200).json({
             message: "Request sent successfully"
         })
