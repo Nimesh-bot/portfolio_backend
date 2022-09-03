@@ -128,7 +128,7 @@ const receiveRequest = async(req, res) => {
             service:'gmail',
             auth:{
                 user:'somit409@gmail.com',
-                pass:'spprtvextnqhittp'
+                pass: process.env.GMAIL_PASS
             }
         })
         
