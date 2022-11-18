@@ -18,17 +18,19 @@ app.use(helmet())
 
 var allowlist = ['https://www.nimesh-shakya.com.np/']
 
-app.use(cors({
-    origin: function (origin, callback) {
-      if (!origin || allowlist.indexOf(origin) !== -1) {
-        callback(null, true)
-      } else {
-        callback(new Error('Not allowed by CORS'))
-      }
-    },
-    methods: "GET,PUT,POST,DELETE",
-    credentials: true
-  }))
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowlist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   },
+//   methods: "GET,PUT,POST,DELETE",
+//   credentials: true
+// }))
+
+app.use(cors())
 
 // Routes
 app.use('/auth', require('./routes/authRoute'));
